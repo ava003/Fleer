@@ -9,6 +9,8 @@ public class CameraWH : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		// フルスクリーンモード
+		Screen.fullScreen = true;
 		// カメラの検索
 		Camera camera = GetComponent<Camera>();
 		// 指定された比率からサイズ算出
