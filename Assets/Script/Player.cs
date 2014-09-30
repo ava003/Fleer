@@ -4,7 +4,6 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public float speed = 6.0f;	// プレイヤー移動スピード
-	public float gravity = 2.0f; // 重力の設定
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +13,17 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// プレイヤーの移動
-		this.rigidbody.velocity = new Vector3(Input.GetAxisRaw("Horizontal") * speed, -1 * gravity, Input.GetAxisRaw("Vertical") * speed);
+		if (Input.GetKey (KeyCode.UpArrow)) {
+			this.rigidbody.velocity += this.transform.forward * speed;
+		}
+		if (Input.GetKey (KeyCode.DownArrow)) {
+			this.rigidbody.velocity -= this.transform.forward * speed;
+		}
+		if (Input.GetKey (KeyCode.RightArrow)) {
+			this.rigidbody.velocity += this.transform.right * speed;
+		}
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			this.rigidbody.velocity -= this.transform.right * speed;
+		}
 	}
 }

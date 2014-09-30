@@ -12,7 +12,7 @@ public class CameraWH : MonoBehaviour {
 		// フルスクリーンモード
 		Screen.fullScreen = true;
 		// カメラの検索
-		Camera camera = GetComponent<Camera>();
+		Camera camera = GameObject.Find("Main Camera").GetComponent<Camera>();
 		// 指定された比率からサイズ算出
 		Rect rect = calcAspect(m_x_aspect, m_y_aspect);
 		// カメラの比率を変更
