@@ -49,6 +49,9 @@
      <Compile Include="Assets\Script\CameraWH.cs" />
      <Compile Include="Assets\Script\MouseCamera.cs" />
      <Compile Include="Assets\Script\Player.cs" />
+ <Reference Include="Assembly-UnityScript-firstpass">
+ <HintPath>C:/Users/Kana/Documents/GitHub/Fleer/Library/ScriptAssemblies/Assembly-UnityScript-firstpass.dll</HintPath>
+ </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
