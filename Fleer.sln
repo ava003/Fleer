@@ -7,6 +7,8 @@ Project("{0101899E-6B6B-5712-6EFE-ADA14E1F5BCC}") = "Fleer", "Assembly-CSharp.cs
 EndProject
 Project("{0101899E-6B6B-5712-6EFE-ADA14E1F5BCC}") = "Fleer", "Assembly-UnityScript-firstpass.unityproj", "{FDC26AC5-42C4-4D4C-1CEE-366D6ED97C67}"
 EndProject
+Project("{0101899E-6B6B-5712-6EFE-ADA14E1F5BCC}") = "Fleer", "Assembly-UnityScript.unityproj", "{078DB8CF-6AD9-D553-22F8-44D999A34DE5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,11 +27,15 @@ Global
 		{FDC26AC5-42C4-4D4C-1CEE-366D6ED97C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDC26AC5-42C4-4D4C-1CEE-366D6ED97C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDC26AC5-42C4-4D4C-1CEE-366D6ED97C67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{078DB8CF-6AD9-D553-22F8-44D999A34DE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{078DB8CF-6AD9-D553-22F8-44D999A34DE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{078DB8CF-6AD9-D553-22F8-44D999A34DE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{078DB8CF-6AD9-D553-22F8-44D999A34DE5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-											GlobalSection(MonoDevelopProperties) = preSolution
+																																														GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = Assembly-CSharp.csproj
 		Policies = $0
 		$0.TextStylePolicy = $1

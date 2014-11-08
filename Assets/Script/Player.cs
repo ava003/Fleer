@@ -10,13 +10,15 @@ public class Player : MonoBehaviour {
 
 	private Camera Maincamera;
 	private GameObject PlayChara;
-	private GameObject knife;
 	private int layerMask;
 	private RaycastHit hit;
+
+	private Animator anim;
+	private bool Walk = false;
 	
 	void Start () {
 		PlayChara = GameObject.Find("Player");
-		knife = GameObject.Find("knife");
+		anim = GameObject.Find("Playchara").GetComponent<Animator>();
 		Maincamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 		layerMask = 1 << 9;
 	}
@@ -28,17 +30,45 @@ public class Player : MonoBehaviour {
 	
 	#region プレイヤーの移動
 	private void PlayerMove(){
+		/* プレイヤーの移動モーションについて
+		 * +1……正面
+		 * -1……後方
+		 * +2＜……右
+		 * -2＞……左
+		 * 0……アイドル状態
+		 */
+		int move = 0;
+
 		if (Input.GetKey (KeyCode.UpArrow)) {
+			Walk = true;
+			move += 1;
 			PlayChara.rigidbody.velocity += PlayChara.transform.forward * speed;
 		}
 		if (Input.GetKey (KeyCode.DownArrow)) {
+			Walk = true;
+			move -= 1;
 			PlayChara.rigidbody.velocity -= PlayChara.transform.forward * speed;
 		}
 		if (Input.GetKey (KeyCode.RightArrow)) {
+			Walk = true;
+			move += 3;
 			PlayChara.rigidbody.velocity += PlayChara.transform.right * speed;
 		}
 		if (Input.GetKey (KeyCode.LeftArrow)) {
+			Walk = true;
+			move -= 3;
 			PlayChara.rigidbody.velocity -= PlayChara.transform.right * speed;
+		}
+
+		if(!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey (KeyCode.DownArrow) && !Input.GetKey (KeyCode.RightArrow) && !Input.GetKey (KeyCode.LeftArrow)){
+			Walk = false;
+		}
+
+		if(Walk && move != 0){
+			anim.SetBool("Walk_Start", true);
+			anim.SetInteger("Move", move);
+		}else{
+			anim.SetBool("Walk_Start", false);
 		}
 	}
 	#endregion
@@ -55,12 +85,6 @@ public class Player : MonoBehaviour {
 				}
 			}
 		}
-	}
-	#endregion
-	
-	#region ナイフのヒット判定
-	private void OnCollisionEnter(Collision collision){
-
 	}
 	#endregion
 }
