@@ -8,10 +8,12 @@ public class MouseCamera : MonoBehaviour {
 	public float minimumY = -60F;	//Y方向の最小角度
 	
 	private Camera Maincamera;
+	private GameObject PlayChara;
 	private int layerMask;
 	private RaycastHit hit;
 
 	void Start () {
+		PlayChara = GameObject.Find("Player");
 		Maincamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 		layerMask = 1 << 8;
 	}
@@ -25,7 +27,7 @@ public class MouseCamera : MonoBehaviour {
 			//{
 				Vector3 vec = Input.mousePosition;
 				vec.z = 10f;
-				this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(Maincamera.ScreenToWorldPoint(vec) - transform.position), speed);
+				PlayChara.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(Maincamera.ScreenToWorldPoint(vec) - transform.position), speed);
 			//}
 			//Debug.Log(this.transform.localEulerAngles.y + ":" + Input.mousePosition.y);
 		}

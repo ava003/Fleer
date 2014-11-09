@@ -1,37 +1,35 @@
 Base path: G:/My Documents/Unity/Editor/Data
-Pipe name: \\.\pipe\UnityShaderCompiler-1-6616
+Pipe name: \\.\pipe\UnityShaderCompiler-1-2196
 Cmd: getPlatforms
+Cmd: preprocess
+  insize=4754 outsize=1892 ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (37): failed to open source file: 'CharaMain.cg'
-  api=4 type=0 insize=393 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=0
+  api=4 type=0 insize=8743 outsize=5101 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (37): failed to open source file: 'CharaMain.cg'
-  api=4 type=1 insize=393 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=0
+  api=4 type=1 insize=8743 outsize=2233 kw=DIRECTIONAL SHADOWS_OFF LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (37): failed to open source file: 'CharaMain.cg'
-  api=4 type=0 insize=393 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=0
+  api=4 type=0 insize=6674 outsize=5060 kw=POINT ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (37): failed to open source file: 'CharaMain.cg'
-  api=4 type=1 insize=393 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=0
+  api=4 type=1 insize=6674 outsize=2582 kw=POINT ok=1
 Cmd: compileSnippet
-  api=4 type=0 insize=4466 outsize=2314 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=1
+  api=4 type=0 insize=6169 outsize=3736 kw= ok=1
 Cmd: compileSnippet
-  api=4 type=1 insize=4466 outsize=1632 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=1
+  api=4 type=1 insize=6169 outsize=1038 kw= ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (33): failed to open source file: 'CharaSkin.cg'
-  api=4 type=0 insize=393 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=0
+  api=4 type=0 insize=8263 outsize=4890 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (33): failed to open source file: 'CharaSkin.cg'
-  api=4 type=1 insize=393 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=0
+  api=4 type=1 insize=8263 outsize=1518 kw=LIGHTMAP_OFF DIRLIGHTMAP_OFF HDR_LIGHT_PREPASS_OFF ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (34): failed to open source file: 'CharaSkin.cg'
-  api=4 type=0 insize=393 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=0
+  api=4 type=0 insize=5965 outsize=3687 kw=SHADOWS_DEPTH ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (34): failed to open source file: 'CharaSkin.cg'
-  api=4 type=1 insize=393 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=0
+  api=4 type=1 insize=5965 outsize=868 kw=SHADOWS_DEPTH ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (35): failed to open source file: 'CharaSkin.cg'
-  api=4 type=0 insize=393 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=0
+  api=4 type=0 insize=6674 outsize=4345 kw=DIRECTIONAL ok=1
 Cmd: compileSnippet
-  error: 2 plat 4 at (35): failed to open source file: 'CharaSkin.cg'
-  api=4 type=1 insize=393 outsize=0 kw=DIRECTIONAL SHADOWS_SCREEN LIGHTMAP_OFF DIRLIGHTMAP_OFF ok=0
+  api=4 type=1 insize=6674 outsize=2111 kw=DIRECTIONAL ok=1
+Cmd: preprocess
+  insize=4754 outsize=1892 ok=1
+Unhandled exception: Readfile from pipe failed. GLE=パイプは終了しました。
+
+
+Quitting shader compiler process

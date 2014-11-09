@@ -38,8 +38,8 @@ public class Player : MonoBehaviour {
 		 * 0……アイドル状態
 		 */
 		int move = 0;
-		float speed = WalkSpeed;
-		bool Walk =false, Run = false;
+		float speed = WalkSpeed;		//移動スピード
+		bool Walk =false, Run = false;	//各フラグ
 
 		if(Input.GetKey(KeyCode.Z)){
 			speed = RunSpeed;
@@ -70,6 +70,7 @@ public class Player : MonoBehaviour {
 			PlayChara.rigidbody.velocity -= PlayChara.transform.right * speed;
 		}
 
+		//Animatorへフラグと数値を送る
 		if(Run && move != 0){
 			anim.SetBool("Run_Start", true);
 			anim.SetBool("Walk_Start", false);
@@ -82,8 +83,6 @@ public class Player : MonoBehaviour {
 			anim.SetBool("Run_Start", false);
 			anim.SetBool("Walk_Start", false);
 		}
-
-		Debug.Log(speed);
 	}
 	#endregion
 
@@ -95,7 +94,8 @@ public class Player : MonoBehaviour {
 
 			if(Physics.Raycast(ray, out hit, HitDistance, layerMask)){
 				if(hit.collider.tag == "Enemy"){
-					hit.collider.gameObject.renderer.material = mat[0];
+					//hit.collider.gameObject.renderer.material = mat[0];
+					Debug.Log(hit.collider.gameObject.transform.root.name);
 				}
 			}
 		}
