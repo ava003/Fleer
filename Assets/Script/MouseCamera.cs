@@ -27,7 +27,7 @@ public class MouseCamera : MonoBehaviour {
 				vec.z = 10f;
 				this.transform.rotation = Quaternion.Slerp(this.transform.rotation, Quaternion.LookRotation(Maincamera.ScreenToWorldPoint(vec) - transform.position), speed);
 			//}
-			Debug.Log(this.transform.localEulerAngles.y + ":" + Input.mousePosition.y);
+			//Debug.Log(this.transform.localEulerAngles.y + ":" + Input.mousePosition.y);
 		}
 		
 	}

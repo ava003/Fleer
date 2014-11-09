@@ -10,7 +10,7 @@ public class WiiRemote : MonoBehaviour {
 		string stCurrentDir = System.IO.Directory.GetCurrentDirectory();
 		// カレントディレクトリを表示する
 		Debug.Log(stCurrentDir);
-		System.Diagnostics.Process p = System.Diagnostics.Process.Start(FilePass);
+		System.Diagnostics.Process.Start(FilePass);
 	}
 
 	void Update () {

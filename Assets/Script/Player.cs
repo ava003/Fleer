@@ -3,7 +3,8 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-	public float speed = 6.0f;	// プレイヤー移動スピード
+	public float WalkSpeed = 0.2f;	// プレイヤー移動スピード
+	public float RunSpeed = 0.5f;
 	public float HitDistance = 10.0f;	//弾が届く範囲
 
 	public Material[] mat = new Material[5];
@@ -14,7 +15,6 @@ public class Player : MonoBehaviour {
 	private RaycastHit hit;
 
 	private Animator anim;
-	private bool Walk = false;
 	
 	void Start () {
 		PlayChara = GameObject.Find("Player");
@@ -38,6 +38,16 @@ public class Player : MonoBehaviour {
 		 * 0……アイドル状態
 		 */
 		int move = 0;
+		float speed = WalkSpeed;
+		bool Walk =false, Run = false;
+
+		if(Input.GetKey(KeyCode.Z)){
+			speed = RunSpeed;
+			Run = true;
+		}
+		if(Input.GetKeyUp(KeyCode.Z)){
+			PlayChara.rigidbody.velocity = Vector3.zero;
+		}
 
 		if (Input.GetKey (KeyCode.UpArrow)) {
 			Walk = true;
@@ -51,25 +61,29 @@ public class Player : MonoBehaviour {
 		}
 		if (Input.GetKey (KeyCode.RightArrow)) {
 			Walk = true;
-			move += 3;
+			move += 4;
 			PlayChara.rigidbody.velocity += PlayChara.transform.right * speed;
 		}
 		if (Input.GetKey (KeyCode.LeftArrow)) {
 			Walk = true;
-			move -= 3;
+			move -= 4;
 			PlayChara.rigidbody.velocity -= PlayChara.transform.right * speed;
 		}
 
-		if(!Input.GetKey(KeyCode.UpArrow) && !Input.GetKey (KeyCode.DownArrow) && !Input.GetKey (KeyCode.RightArrow) && !Input.GetKey (KeyCode.LeftArrow)){
-			Walk = false;
-		}
-
-		if(Walk && move != 0){
+		if(Run && move != 0){
+			anim.SetBool("Run_Start", true);
+			anim.SetBool("Walk_Start", false);
+			anim.SetInteger("Move", move);
+		}else if(Walk && move != 0){
+			anim.SetBool("Run_Start", false);
 			anim.SetBool("Walk_Start", true);
 			anim.SetInteger("Move", move);
 		}else{
+			anim.SetBool("Run_Start", false);
 			anim.SetBool("Walk_Start", false);
 		}
+
+		Debug.Log(speed);
 	}
 	#endregion
 

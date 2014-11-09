@@ -907,6 +907,10 @@ Transition:
     m_ConditionEvent: Jump
     m_EventTreshold: 2
     m_ExitTime: .899999976
+  - m_ConditionMode: 2
+    m_ConditionEvent: Run_Start
+    m_EventTreshold: 2
+    m_ExitTime: .899999976
   - m_ConditionMode: 1
     m_ConditionEvent: Walk_Start
     m_EventTreshold: 0
@@ -937,6 +941,10 @@ Transition:
     m_ExitTime: .899999976
   - m_ConditionMode: 2
     m_ConditionEvent: Jump
+    m_EventTreshold: -2
+    m_ExitTime: .899999976
+  - m_ConditionMode: 2
+    m_ConditionEvent: Run_Start
     m_EventTreshold: -2
     m_ExitTime: .899999976
   - m_ConditionMode: 1
@@ -1175,6 +1183,10 @@ Transition:
     m_ConditionEvent: Jump
     m_EventTreshold: 1
     m_ExitTime: .899999976
+  - m_ConditionMode: 2
+    m_ConditionEvent: Run_Start
+    m_EventTreshold: 1
+    m_ExitTime: .899999976
   - m_ConditionMode: 1
     m_ConditionEvent: Walk_Start
     m_EventTreshold: 0
@@ -1349,6 +1361,10 @@ Transition:
     m_ExitTime: .899999976
   - m_ConditionMode: 2
     m_ConditionEvent: Jump
+    m_EventTreshold: -1
+    m_ExitTime: .899999976
+  - m_ConditionMode: 2
+    m_ConditionEvent: Run_Start
     m_EventTreshold: -1
     m_ExitTime: .899999976
   - m_ConditionMode: 1
@@ -2148,10 +2164,7 @@ StateMachine:
   m_OrderedTransitions:
     data:
       first: {fileID: 0}
-      second:
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
+      second: []
     data:
       first: {fileID: 110262375}
       second:
