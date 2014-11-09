@@ -95,9 +95,14 @@ public class Player : MonoBehaviour {
 			if(Physics.Raycast(ray, out hit, HitDistance, layerMask)){
 				if(hit.collider.tag == "Enemy"){
 					//hit.collider.gameObject.renderer.material = mat[0];
-					Debug.Log(hit.collider.gameObject.transform.root.name);
+					Animator eAnim = hit.collider.gameObject.GetComponent<Animator>();
+					eAnim.SetTrigger("Damage");
+					Debug.Log(hit.collider.gameObject.transform.name+":"+hit.collider.gameObject.transform.root.name);
+					Destroy(hit.collider.gameObject);
 				}
+				Debug.Log("ray");
 			}
+			Debug.Log("mouse");
 		}
 	}
 	#endregion
