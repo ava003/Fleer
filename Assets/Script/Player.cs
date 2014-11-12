@@ -7,20 +7,21 @@ public class Player : MonoBehaviour {
 	public float RunSpeed = 0.5f;
 	public float HitDistance = 10.0f;	//弾が届く範囲
 
-	public Material[] mat = new Material[5];
-
 	private Camera Maincamera;
 	private GameObject PlayChara;
 	private int layerMask;
 	private RaycastHit hit;
 
 	private Animator anim;
+	private GameObject enemyPrefab;
 	
 	void Start () {
 		PlayChara = GameObject.FindWithTag("Player");
 		anim = GameObject.Find("chara").GetComponent<Animator>();
 		Maincamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 		layerMask = 1 << 9;
+
+		enemyPrefab = (GameObject)Resources.Load("Prefab/EnemyRagdoll");
 	}
 
 	void Update () {
@@ -97,9 +98,9 @@ public class Player : MonoBehaviour {
 					//hit.collider.gameObject.renderer.material = mat[0];
 					Transform enemy = hit.collider.gameObject.transform.root;
 					Animator eAnim = enemy.GetComponent<Animator>();
-					eAnim.SetTrigger("Damage");
-					Debug.Log(hit.collider.gameObject.transform.name+":"+enemy.name);
-					//Destroy(hit.collider.gameObject);
+					//eAnim.SetTrigger("Damage");
+					Destroy(enemy.gameObject);
+					Instantiate (enemyPrefab, enemy.transform.position, enemy.transform.rotation);
 				}
 				Debug.Log("ray");
 			}
