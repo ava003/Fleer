@@ -17,8 +17,8 @@ public class Player : MonoBehaviour {
 	private Animator anim;
 	
 	void Start () {
-		PlayChara = GameObject.Find("Player");
-		anim = GameObject.Find("Playchara").GetComponent<Animator>();
+		PlayChara = GameObject.FindWithTag("Player");
+		anim = GameObject.Find("chara").GetComponent<Animator>();
 		Maincamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 		layerMask = 1 << 9;
 	}
@@ -95,10 +95,11 @@ public class Player : MonoBehaviour {
 			if(Physics.Raycast(ray, out hit, HitDistance, layerMask)){
 				if(hit.collider.tag == "Enemy"){
 					//hit.collider.gameObject.renderer.material = mat[0];
-					Animator eAnim = hit.collider.gameObject.GetComponent<Animator>();
+					Transform enemy = hit.collider.gameObject.transform.root;
+					Animator eAnim = enemy.GetComponent<Animator>();
 					eAnim.SetTrigger("Damage");
-					Debug.Log(hit.collider.gameObject.transform.name+":"+hit.collider.gameObject.transform.root.name);
-					Destroy(hit.collider.gameObject);
+					Debug.Log(hit.collider.gameObject.transform.name+":"+enemy.name);
+					//Destroy(hit.collider.gameObject);
 				}
 				Debug.Log("ray");
 			}

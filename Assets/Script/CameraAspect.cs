@@ -7,15 +7,16 @@ public class CameraAspect : MonoBehaviour {
 	public float m_x_aspect = 4.0f;
 	public float m_y_aspect = 3.0f;
 
-	public Camera[] camera = new Camera[5];	//シーン内のカメラを格納
-
 	void Start () {
 		//Screen.fullScreen = false;							// フルスクリーンモード
 		//Screen.SetResolution (Screen.currentResolution.width, Screen.currentResolution.height, true);
 
-		for(int i=0; i<camera.Length; i++){
-			Rect rect = calcAspect(m_x_aspect, m_y_aspect);	// 指定された比率からサイズ算出
-			camera[i].rect = rect;							//カメラのサイズを指定
+		Camera mainCamera;
+		GameObject[] cameras = GameObject.FindGameObjectsWithTag("MainCamera");
+		Rect rect = calcAspect(m_x_aspect, m_y_aspect);	// 指定された比率からサイズ算出
+		foreach(GameObject go in cameras){
+			mainCamera = go.GetComponent<Camera>();
+			mainCamera.rect = rect;							//カメラのサイズを指定
 		}
 	}
 
