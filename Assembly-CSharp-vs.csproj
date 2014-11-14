@@ -53,6 +53,7 @@
      <Compile Include="Assets\Resources\UnityAssets\UnityChan\Scripts\SceneLoader.cs" />
      <Compile Include="Assets\Resources\UnityAssets\UnityChan\Scripts\ThirdPersonCamera.cs" />
      <Compile Include="Assets\Resources\UnityAssets\UnityChan\Scripts\UnityChanControlScriptWithRgidBody.cs" />
+     <Compile Include="Assets\Script\Alert.cs" />
      <Compile Include="Assets\Script\CameraAspect.cs" />
      <Compile Include="Assets\Script\CursorChange.cs" />
      <Compile Include="Assets\Script\Enemy.cs" />

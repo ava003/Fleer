@@ -1407,6 +1407,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400182}
   - 95: {fileID: 9500000}
+  - 54: {fileID: 5400022}
   m_Layer: 0
   m_Name: EnemyRagdoll
   m_TagString: Untagged
@@ -2770,6 +2771,21 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: .0500000007
   m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!54 &5400022
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100182}
+  serializedVersion: 2
+  m_Mass: 5
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0

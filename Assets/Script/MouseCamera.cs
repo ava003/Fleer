@@ -13,7 +13,7 @@ public class MouseCamera : MonoBehaviour {
 	private RaycastHit hit;
 
 	void Start () {
-		PlayChara = GameObject.Find("Player");
+		PlayChara = GameObject.Find("PlayerFolder");
 		Maincamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 		layerMask = 1 << 8;
 	}
