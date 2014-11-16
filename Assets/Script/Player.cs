@@ -3,13 +3,18 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
+	public float HitPoint = 10f;	//最大ライフ
+	public float Stamina = 100f;	//最大スタミナ
 	public float WalkSpeed = 0.2f;	// プレイヤー移動スピード
 	public float RunSpeed = 0.5f;
-	public float HitDistance = 10.0f;	//弾が届く範囲
+	public float HitDistance = 10f;	//弾が届く範囲
+
+	public float NowStamina = 0f;	//スタミナ
 
 	private Camera Maincamera;
 	private Transform cameraT;
 	private GameObject PlayChara;
+	private GameObject Canvas;
 	private int layerMask;
 	private RaycastHit hit;
 
@@ -19,8 +24,10 @@ public class Player : MonoBehaviour {
 	
 	void Start () {
 		PlayChara = GameObject.Find("PlayerFolder");
+		Canvas = GameObject.Find("Canvas");
 		anim = GameObject.Find("chara").GetComponent<Animator>();
 		CharaCon = PlayChara.GetComponent<CharacterController> ();
+		NowStamina = Stamina;
 
 		Maincamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 		cameraT = Maincamera.transform;
@@ -53,9 +60,11 @@ public class Player : MonoBehaviour {
 		forward = forward.normalized;
 		Vector3 right = new Vector3(forward.z, 0, -forward.x);
 
-		if(Input.GetKey(KeyCode.Z)){
+		if(Input.GetKey(KeyCode.Z) && NowStamina > 0){
 			speed = RunSpeed;
 			Run = true;
+		}else if(!Input.GetKey(KeyCode.Z) && NowStamina < Stamina){
+			NowStamina ++;
 		}
 
 		if (Input.GetKey (KeyCode.UpArrow)) {
@@ -87,6 +96,7 @@ public class Player : MonoBehaviour {
 
 		//Animatorへフラグと数値を送る
 		if(Run && move != 0){
+			NowStamina --;
 			anim.SetBool("Run_Start", true);
 			anim.SetBool("Walk_Start", false);
 			anim.SetInteger("Move", move);
@@ -101,9 +111,24 @@ public class Player : MonoBehaviour {
 	}
 	#endregion
 
+	#region 被ダメージ処理
+	IEnumerator ApplyDamage(){
+		HitPoint --;
+		Canvas.SendMessage("HitPointDown");
+		anim.SetBool("Damage", true);
+		float timer = 0.0f;
+		//待ち時間を超えるかAlert状態になったら抜ける
+		while(timer <= 0.8f){
+			timer += Time.deltaTime;
+			yield return null;
+		}
+		anim.SetBool("Damage", false);
+	}
+	#endregion
+
 	#region 銃のヒット判定
 	private void RayAttack(){
-		if(Input.GetMouseButtonDown(0)){
+		if(Input.GetMouseButtonDown(1)){
 			
 			Ray ray = Maincamera.ScreenPointToRay(Input.mousePosition);
 

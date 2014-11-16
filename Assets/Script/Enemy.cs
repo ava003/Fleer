@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour {
 	public float TurnTime = 20.0f;		//回転の時間
 	public float AttackDistance = 10.0f;	//攻撃してくる距離
 
-	public GameObject[] targets = new GameObject[5];	//巡回ルート
+	public GameObject[] targets = new GameObject[10];	//巡回ルート
 
 	public bool alert = false;		//発見されたかどうか
 	private bool applyDamage = false;	//ダメージを受けているか
@@ -119,19 +119,20 @@ public class Enemy : MonoBehaviour {
 		
 		Vector3 direction = Vector3.zero;
 		while (angle > 5 || time < TurnTime) {
-			Vector3 offset = this.transform.position - PlayChara.position;	//EnemyをPlayerの距離
-			if(offset.magnitude < AttackDistance){
-				anim.SetTrigger("Attack");
-			}else{
-				anim.SetBool("Run", true);
-				time += Time.deltaTime;
-				angle = Mathf.Abs (EnemyRotate (PlayChara.position, RotateSpeed));
-				float move = Mathf.Clamp01 ((90f - angle) / 90f);
-				
-				direction = this.transform.TransformDirection (Vector3.forward * RunSpeed * move);
-				CharaCon.SimpleMove (direction);
-			}
-			
+			//if(!applyDamage){
+				Vector3 offset = this.transform.position - PlayChara.position;	//EnemyをPlayerの距離
+				if(offset.magnitude < AttackDistance){
+					anim.SetTrigger("Attack");
+				}else{
+					anim.SetBool("Run", true);
+					time += Time.deltaTime;
+					angle = Mathf.Abs (EnemyRotate (PlayChara.position, RotateSpeed));
+					float move = Mathf.Clamp01 ((90f - angle) / 90f);
+					
+					direction = this.transform.TransformDirection (Vector3.forward * RunSpeed * move);
+					CharaCon.SimpleMove (direction);
+				}
+			//}
 			yield return new WaitForFixedUpdate();
 		}
 	}
@@ -140,7 +141,7 @@ public class Enemy : MonoBehaviour {
 	void EnemyAttack(){
 		AnimatorStateInfo state = gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
 		if(state.nameHash == Animator.StringToHash("Base Layer.Attack")){
-			Debug.Log("Damage!");
+			PlayChara.SendMessage("ApplyDamage");
 		}
 	}
 	#endregion
