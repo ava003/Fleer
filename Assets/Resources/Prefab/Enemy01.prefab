@@ -1394,6 +1394,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400184}
   - 136: {fileID: 13600000}
+  - 114: {fileID: 11400004}
   m_Layer: 9
   m_Name: rightArm
   m_TagString: Enemy
@@ -2980,11 +2981,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HitPoint: 5
   WalkSpeed: 1
-  RunSpeed: 2.5
-  RotateSpeed: 500
+  RunSpeed: 3
+  RotateSpeed: 200
   TurnTime: 15
   AttackDistance: 1
-  target:
+  targets:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -3002,7 +3003,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd3f0c0ab3c8a4a46977b5a1aad18d01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AlertDistance: 1000
+  AlertDistance: 10
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100184}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f421de4202ba2545a7cffe1f07e3f8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!135 &13500000
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -3247,7 +3259,7 @@ CharacterController:
   m_GameObject: {fileID: 100176}
   serializedVersion: 2
   m_Height: 1.5
-  m_Radius: .25
+  m_Radius: .200000003
   m_SlopeLimit: 45
   m_StepOffset: .300000012
   m_SkinWidth: .0799999982

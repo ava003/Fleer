@@ -2,7 +2,7 @@
 using System.Collections;
 
 public class Enemy : MonoBehaviour {
-	
+
 	public int HitPoint = 5;			//ライフ
 	public float WalkSpeed = 1.0f;		//移動スピード
 	public float RunSpeed = 2.0f;
@@ -10,10 +10,10 @@ public class Enemy : MonoBehaviour {
 	public float TurnTime = 20.0f;		//回転の時間
 	public float AttackDistance = 10.0f;	//攻撃してくる距離
 
-	public GameObject[] target = new GameObject[5];	//巡回ルート
+	public GameObject[] targets = new GameObject[5];	//巡回ルート
 
 	public bool alert = false;		//発見されたかどうか
-	private bool damage = false;	//ダメージを受けているか
+	private bool applyDamage = false;	//ダメージを受けているか
 
 	private Transform PlayChara;			//Player
 	private Animator anim;					//Enemyアニメーター
@@ -21,6 +21,7 @@ public class Enemy : MonoBehaviour {
 	private GameObject enemyPrefab;			//RagDollのPrefab
 
 	private string function = "";			//状態メソッド
+	private int targetNumber = 0;
 
 	IEnumerator Start () {
 		PlayChara = GameObject.Find("PlayerFolder").transform;	//Playerの参照
@@ -28,11 +29,10 @@ public class Enemy : MonoBehaviour {
 		CharaCon = GetComponent<CharacterController> ();		//Enemyのキャラクターコントロールを参照
 		enemyPrefab = (GameObject)Resources.Load("Prefab/EnemyRagdoll");	//RagDollの参照
 
-		function = "EnemyIdle";	//初期メソッド
-		//動作を実行(無限ループ)
+		function = "EnemyIdle";	//初期状態メソッド
+		//動作を実行
 		while (true) {
-			yield return StartCoroutine (function);	//攻撃状態を実行
-
+			yield return StartCoroutine (function);	//状態メソッドを実行
 		}
 	}
 
@@ -42,15 +42,16 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	#region ダメージ処理
+	#region 被ダメージ処理
 	IEnumerator ApplyDamage(){
 		HitPoint --;		//ライフの減少
 
-		if(!damage){
-			damage = true;
+		//被ダメのモーション再生
+		if(!applyDamage){
+			applyDamage = true;
 			anim.SetBool("Damage", true);
 			yield return new WaitForSeconds(1.0f);
-			damage = false;
+			applyDamage = false;
 			anim.SetBool("Damage", false);
 		}
 		
@@ -65,27 +66,49 @@ public class Enemy : MonoBehaviour {
 	}
 
 	/* 死亡処理 */
-	void EnemyDie(){
-		Destroy(gameObject);	//gameobjectを削除
-		GameObject Doll = Instantiate (enemyPrefab, this.transform.position, this.transform.rotation) as GameObject;
-		//Doll.transform.rigidbody.AddForce(new Vector3(1.0f, -10.0f, 100.0f), ForceMode.Impulse);
+	IEnumerator EnemyDie(){
+		anim.SetBool("Damage", true);	//被ダメのモーション再生
+		yield return new WaitForSeconds(0.5f);
+		Destroy(gameObject);			//gameobjectを削除
+		Instantiate (enemyPrefab, this.transform.position, this.transform.rotation);	//RagDollのPrefabを出現
+
 	}
 	#endregion
 
 	#region アイドル状態
 	IEnumerator EnemyIdle(){
+		float angle = 180.0f;
+		float time = 0.0f;
 		
-		yield return new WaitForFixedUpdate();
-//		//クロックとの距離が近づくまでループ
-//		while (true) {
-//			CharaCon.SimpleMove (Vector3.zero);
-//			yield return new WaitForSeconds (0.2f);
-//			
-//			//クロックとの距離が近づいたらループを抜ける
-//			Vector3 offset = transform.position - PlayChara.position;
-//			if (offset.magnitude < 1.0f)
-//				break;
-//		}
+		Vector3 direction = Vector3.zero;		//進む量
+		while ((angle > 5 || time < TurnTime) && !alert) {
+			Transform target = targets[targetNumber].transform;			//次の巡回場所
+			Vector3 offset = this.transform.position - target.position;	//Enemyを巡回場所の距離
+			if(offset.magnitude > 1.0f){
+				anim.SetBool("Walk", true);		//歩くモーション再生
+				time += Time.deltaTime;
+				angle = Mathf.Abs (EnemyRotate (target.position, RotateSpeed));
+				float move = Mathf.Clamp01 ((90f - angle) / 90f);
+				
+				direction = this.transform.TransformDirection (Vector3.forward * WalkSpeed * move);
+			}else{
+				anim.SetBool("Walk", false);	//歩くモーション停止
+				float waittime = Random.Range(1.0f, 5.0f);	//待ち時間をランダムで決定
+				float timer = 0.0f;
+				//待ち時間を超えるかAlert状態になったら抜ける
+				while(timer <= waittime && !alert){
+					timer += Time.deltaTime;
+					yield return null;
+				}
+				if(targetNumber > targets.Length || targets[targetNumber+1] == null) {
+					targetNumber = 0;	//巡回ルートのリセット
+				}else{
+					targetNumber ++;	//次の巡回場所
+				}
+			}
+			CharaCon.SimpleMove (direction);	//Enemyを移動
+			yield return new WaitForFixedUpdate();
+		}
 	}
 	#endregion
 
@@ -94,13 +117,11 @@ public class Enemy : MonoBehaviour {
 		float angle = 180.0f;
 		float time = 0.0f;
 		
-		Vector3 direction;
+		Vector3 direction = Vector3.zero;
 		while (angle > 5 || time < TurnTime) {
-
-			Vector3 offset = this.transform.position - PlayChara.position;
+			Vector3 offset = this.transform.position - PlayChara.position;	//EnemyをPlayerの距離
 			if(offset.magnitude < AttackDistance){
 				anim.SetTrigger("Attack");
-				yield return new WaitForSeconds(0.5f);
 			}else{
 				anim.SetBool("Run", true);
 				time += Time.deltaTime;
@@ -115,7 +136,16 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 
-	/* 回転させるメソッド */
+	/* 攻撃メソッド */
+	void EnemyAttack(){
+		AnimatorStateInfo state = gameObject.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0);
+		if(state.nameHash == Animator.StringToHash("Base Layer.Attack")){
+			Debug.Log("Damage!");
+		}
+	}
+	#endregion
+	
+	/* 対象の方向へ回転させるメソッド */
 	float EnemyRotate(Vector3 targetPos, float rotateSpeed){
 		Vector3 relative = this.transform.InverseTransformPoint (targetPos);
 		float angle = Mathf.Atan2 (relative.x, relative.z) * Mathf.Rad2Deg;
@@ -126,6 +156,4 @@ public class Enemy : MonoBehaviour {
 		this.transform.Rotate (0, clampedAngle, 0);
 		return angle;
 	}
-	#endregion
-
 }

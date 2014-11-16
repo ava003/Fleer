@@ -57,6 +57,7 @@
      <Compile Include="Assets\Script\CameraAspect.cs" />
      <Compile Include="Assets\Script\CursorChange.cs" />
      <Compile Include="Assets\Script\Enemy.cs" />
+     <Compile Include="Assets\Script\EnemyAttack.cs" />
      <Compile Include="Assets\Script\MouseCamera.cs" />
      <Compile Include="Assets\Script\Player.cs" />
      <Compile Include="Assets\Script\PlayerKnife.cs" />

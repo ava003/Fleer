@@ -24,7 +24,7 @@ public class Player : MonoBehaviour {
 
 		Maincamera = GameObject.Find("Main Camera").GetComponent<Camera>();
 		cameraT = Maincamera.transform;
-		layerMask = 1 << 9;
+		layerMask = ((1 << 9) + (1 << 10));
 	}
 
 	void Update () {
@@ -118,8 +118,8 @@ public class Player : MonoBehaviour {
 					Transform enemy = hit.collider.gameObject.transform.root;
 					enemy.SendMessage(funstion);
 				}
+				Debug.Log(hit.collider.name);
 			}
-			Debug.Log("mouse");
 		}
 	}
 	#endregion
