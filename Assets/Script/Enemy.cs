@@ -6,28 +6,29 @@ public class Enemy : MonoBehaviour {
 	public int HitPoint = 5;			//ライフ
 	public float WalkSpeed = 1.0f;		//移動スピード
 	public float RunSpeed = 2.0f;
-	public float RotateSpeed = 200.0f;	//回転のスピード
-	public float TurnTime = 20.0f;		//回転の時間
 	public float AttackDistance = 10.0f;	//攻撃してくる距離
 
-	public GameObject[] targets = new GameObject[10];	//巡回ルート
+	public Transform[] targets;	//巡回ルート
 
 	public bool alert = false;		//発見されたかどうか
 	private bool applyDamage = false;	//ダメージを受けているか
 
-	private Transform PlayChara;			//Player
-	private Animator anim;					//Enemyアニメーター
-	private CharacterController CharaCon;	//Enemyキャラクターコントローラコンポーネント
-	private GameObject enemyPrefab;			//RagDollのPrefab
+	private Transform PlayChara;		//Player
+	private Animator anim;				//Enemyアニメーター
+	private NavMeshAgent CharaNav;		//Enemyナビコンポーネント
+	private GameObject enemyPrefab;		//RagDollのPrefab
 
 	private string function = "";			//状態メソッド
-	private int targetNumber = 0;
+	private int currentRoot = 0;			//現在のターゲット
 
 	IEnumerator Start () {
 		PlayChara = GameObject.Find("PlayerFolder").transform;	//Playerの参照
 		anim = gameObject.GetComponent<Animator>();				//Enemyのアニメーターを参照
-		CharaCon = GetComponent<CharacterController> ();		//Enemyのキャラクターコントロールを参照
+		CharaNav = GetComponent<NavMeshAgent> ();				//Enemyのナビエージェントを参照
 		enemyPrefab = (GameObject)Resources.Load("Prefab/EnemyRagdoll");	//RagDollの参照
+
+		CharaNav.speed = WalkSpeed;
+		CharaNav.stoppingDistance = AttackDistance;
 
 		function = "EnemyIdle";	//初期状態メソッド
 		//動作を実行
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour {
 	void Update () {
 		if(alert){
 			function = "EnemyAlert";	//Alert状態のメソッドを指定
+			CharaNav.speed = RunSpeed;
 		}
 	}
 
@@ -77,63 +79,32 @@ public class Enemy : MonoBehaviour {
 
 	#region アイドル状態
 	IEnumerator EnemyIdle(){
-		float angle = 180.0f;
-		float time = 0.0f;
-		
-		Vector3 direction = Vector3.zero;		//進む量
-		while ((angle > 5 || time < TurnTime) && !alert) {
-			Transform target = targets[targetNumber].transform;			//次の巡回場所
-			Vector3 offset = this.transform.position - target.position;	//Enemyを巡回場所の距離
-			if(offset.magnitude > 1.0f){
-				anim.SetBool("Walk", true);		//歩くモーション再生
-				time += Time.deltaTime;
-				angle = Mathf.Abs (EnemyRotate (target.position, RotateSpeed));
-				float move = Mathf.Clamp01 ((90f - angle) / 90f);
-				
-				direction = this.transform.TransformDirection (Vector3.forward * WalkSpeed * move);
-			}else{
-				anim.SetBool("Walk", false);	//歩くモーション停止
-				float waittime = Random.Range(1.0f, 5.0f);	//待ち時間をランダムで決定
-				float timer = 0.0f;
-				//待ち時間を超えるかAlert状態になったら抜ける
-				while(timer <= waittime && !alert){
-					timer += Time.deltaTime;
-					yield return null;
-				}
-				if(targetNumber > targets.Length || targets[targetNumber+1] == null) {
-					targetNumber = 0;	//巡回ルートのリセット
-				}else{
-					targetNumber ++;	//次の巡回場所
-				}
+		Vector3 pos = targets[currentRoot].position;	//ターゲットのポジション
+		anim.SetBool("Walk", true);		//歩くモーション再生
+		if(Vector3.Distance(this.transform.position, pos) < 0.5f){
+			anim.SetBool("Walk", false);	//歩くモーション停止
+			float waittime = Random.Range(1.0f, 5.0f);	//待ち時間をランダムで決定
+			float timer = 0.0f;
+			//待ち時間を超えるかAlert状態になったら抜ける
+			while(timer <= waittime && !alert){
+				timer += Time.deltaTime;
+				yield return null;
 			}
-			CharaCon.SimpleMove (direction);	//Enemyを移動
-			yield return new WaitForFixedUpdate();
+			currentRoot = (currentRoot < targets.Length - 1) ? currentRoot + 1 : 0;
 		}
+		CharaNav.SetDestination(pos);
 	}
 	#endregion
 
+
 	#region アラート状態
-	IEnumerator EnemyAlert(){
-		float angle = 180.0f;
-		float time = 0.0f;
-		
-		Vector3 direction = Vector3.zero;
-		while (angle > 5 || time < TurnTime) {
-			//if(!applyDamage){
-				Vector3 offset = this.transform.position - PlayChara.position;	//EnemyをPlayerの距離
-				if(offset.magnitude < AttackDistance){
-					anim.SetTrigger("Attack");
-				}else{
-					anim.SetBool("Run", true);
-					time += Time.deltaTime;
-					angle = Mathf.Abs (EnemyRotate (PlayChara.position, RotateSpeed));
-					float move = Mathf.Clamp01 ((90f - angle) / 90f);
-					
-					direction = this.transform.TransformDirection (Vector3.forward * RunSpeed * move);
-					CharaCon.SimpleMove (direction);
-				}
-			//}
-			yield return new WaitForFixedUpdate();
+	void EnemyAlert(){
+		Vector3 pos = PlayChara.position;	//Playerのポジション
+		anim.SetBool("Run", true);			//走るモーション再生
+		if(Vector3.Distance(this.transform.position, pos) < AttackDistance){
+			anim.SetTrigger("Attack");
+		}else{
+			CharaNav.SetDestination(pos);
 		}
 	}
 

@@ -25,7 +25,7 @@ public class Player : MonoBehaviour {
 	void Start () {
 		PlayChara = GameObject.Find("PlayerFolder");
 		Canvas = GameObject.Find("Canvas");
-		anim = GameObject.Find("chara").GetComponent<Animator>();
+		anim = GameObject.FindWithTag("chara").GetComponent<Animator>();
 		CharaCon = PlayChara.GetComponent<CharacterController> ();
 		NowStamina = Stamina;
 

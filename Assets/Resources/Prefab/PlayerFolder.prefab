@@ -399,9 +399,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 400052}
   - 95: {fileID: 9500000}
+  - 114: {fileID: 11400004}
+  - 143: {fileID: 14300002}
   m_Layer: 0
-  m_Name: chara
-  m_TagString: Untagged
+  m_Name: Player
+  m_TagString: chara
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -513,7 +515,6 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 400066}
-  - 33: {fileID: 3300002}
   - 143: {fileID: 14300000}
   - 114: {fileID: 11400002}
   m_Layer: 0
@@ -1037,7 +1038,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -.103179932}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -1063,11 +1064,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .982554197, z: .66166532}
+  m_LocalPosition: {x: 0, y: .982554197, z: .558485508}
   m_LocalScale: {x: .745156825, y: .885857999, z: .722994149}
   m_Children: []
   m_Father: {fileID: 400066}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &400058
 Transform:
   m_ObjectHideFlags: 1
@@ -1100,12 +1101,12 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100062}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.20000005, z: -4}
+  m_LocalPosition: {x: 0, y: 2.20000005, z: -4.10317993}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400054}
   m_Father: {fileID: 400066}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &400064
 Transform:
   m_ObjectHideFlags: 1
@@ -1126,11 +1127,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100066}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -8.25317955}
+  m_LocalPosition: {x: 0, y: 0, z: -23.8700008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 400056}
   - {fileID: 400062}
+  - {fileID: 400056}
   - {fileID: 400052}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1284,7 +1285,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: .192156866, g: .301960796, b: .474509805, a: .0196078438}
+  m_BackGroundColor: {r: .192156866, g: .301960796, b: .470588237, a: .0196078438}
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -1292,7 +1293,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: .300000012
-  far clip plane: 25
+  far clip plane: 60
   field of view: 30
   orthographic: 0
   orthographic size: 5
@@ -1334,13 +1335,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100054}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!33 &3300002
-MeshFilter:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100066}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &5400000
 Rigidbody:
   m_ObjectHideFlags: 1
@@ -1443,9 +1437,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 642837bdfe635124abcb146b3c2f4345, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HitPoint: 10
+  Stamina: 100
   WalkSpeed: 2
   RunSpeed: 4
   HitDistance: 20
+  NowStamina: 0
+--- !u!114 &11400004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 642837bdfe635124abcb146b3c2f4345, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HitPoint: 10
+  Stamina: 100
+  WalkSpeed: 2
+  RunSpeed: 4
+  HitDistance: 20
+  NowStamina: 0
 --- !u!124 &12400000
 Behaviour:
   m_ObjectHideFlags: 1
@@ -1521,6 +1535,20 @@ CharacterController:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100066}
+  serializedVersion: 2
+  m_Height: 1.5
+  m_Radius: .200000003
+  m_SlopeLimit: 45
+  m_StepOffset: .300000012
+  m_SkinWidth: .0799999982
+  m_MinMoveDistance: 0
+  m_Center: {x: 0, y: .850000024, z: 0}
+--- !u!143 &14300002
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 100052}
   serializedVersion: 2
   m_Height: 1.5
   m_Radius: .200000003
