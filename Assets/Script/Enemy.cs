@@ -7,11 +7,13 @@ public class Enemy : MonoBehaviour {
 	public float WalkSpeed = 1.0f;		//移動スピード
 	public float RunSpeed = 2.0f;
 	public float AttackDistance = 10.0f;	//攻撃してくる距離
+	public float DamageWait = 1.0f;
 
 	public Transform[] targets;	//巡回ルート
 
 	public bool alert = false;		//発見されたかどうか
 	private bool applyDamage = false;	//ダメージを受けているか
+	private bool die = false;		//死亡しているか
 
 	private Transform PlayChara;		//Player
 	private Animator anim;				//Enemyアニメーター
@@ -48,21 +50,21 @@ public class Enemy : MonoBehaviour {
 	IEnumerator ApplyDamage(){
 		HitPoint --;		//ライフの減少
 
+		if(HitPoint <= 0){
+			die = true;
+			yield return StartCoroutine (EnemyDie());	//ライフが0になったら死亡
+		}
+
+		if(!alert){
+			alert = true;	//発見されていなかったらAlert状態に
+		}
 		//被ダメのモーション再生
 		if(!applyDamage){
 			applyDamage = true;
 			anim.SetBool("Damage", true);
-			yield return new WaitForSeconds(1.0f);
+			yield return new WaitForSeconds(DamageWait);
 			applyDamage = false;
 			anim.SetBool("Damage", false);
-		}
-		
-		if(!alert){
-			alert = true;	//発見されていなかったらAlert状態に
-		}
-
-		if(HitPoint <= 0){
-			EnemyDie();		//ライフが0になったら死亡
 		}
 		Debug.Log(HitPoint);
 	}
@@ -81,7 +83,7 @@ public class Enemy : MonoBehaviour {
 	IEnumerator EnemyIdle(){
 		Vector3 pos = targets[currentRoot].position;	//ターゲットのポジション
 		anim.SetBool("Walk", true);		//歩くモーション再生
-		if(Vector3.Distance(this.transform.position, pos) < 0.5f){
+		if(Vector3.Distance(this.transform.position, pos) < AttackDistance){
 			anim.SetBool("Walk", false);	//歩くモーション停止
 			float waittime = Random.Range(1.0f, 5.0f);	//待ち時間をランダムで決定
 			float timer = 0.0f;
@@ -100,11 +102,16 @@ public class Enemy : MonoBehaviour {
 	#region アラート状態
 	void EnemyAlert(){
 		Vector3 pos = PlayChara.position;	//Playerのポジション
-		anim.SetBool("Run", true);			//走るモーション再生
-		if(Vector3.Distance(this.transform.position, pos) < AttackDistance){
-			anim.SetTrigger("Attack");
+		if(!applyDamage && !die){
+			if(Vector3.Distance(this.transform.position, pos) < AttackDistance){
+				CharaNav.Stop();
+				anim.SetTrigger("Attack");
+			}else{
+				anim.SetBool("Run", true);			//走るモーション再生
+				CharaNav.SetDestination(pos);
+			}
 		}else{
-			CharaNav.SetDestination(pos);
+			CharaNav.Stop();
 		}
 	}
 
@@ -116,16 +123,5 @@ public class Enemy : MonoBehaviour {
 		}
 	}
 	#endregion
-	
-	/* 対象の方向へ回転させるメソッド */
-	float EnemyRotate(Vector3 targetPos, float rotateSpeed){
-		Vector3 relative = this.transform.InverseTransformPoint (targetPos);
-		float angle = Mathf.Atan2 (relative.x, relative.z) * Mathf.Rad2Deg;
-		
-		float maxRotation = rotateSpeed * Time.deltaTime;
-		float clampedAngle = Mathf.Clamp (angle, -maxRotation, maxRotation);
-		
-		this.transform.Rotate (0, clampedAngle, 0);
-		return angle;
-	}
+
 }

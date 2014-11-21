@@ -708,7 +708,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400176, guid: 47a04062278fba446a1a1066e5acd8e8, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11400000, guid: 47a04062278fba446a1a1066e5acd8e8, type: 2}
       propertyPath: targets.Array.data[0]
@@ -737,6 +737,14 @@ Prefab:
     - target: {fileID: 11400000, guid: 47a04062278fba446a1a1066e5acd8e8, type: 2}
       propertyPath: targets.Array.data[5]
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 47a04062278fba446a1a1066e5acd8e8, type: 2}
+      propertyPath: AttackDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400000, guid: 47a04062278fba446a1a1066e5acd8e8, type: 2}
+      propertyPath: DamageWait
+      value: .800000012
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 14300000, guid: 47a04062278fba446a1a1066e5acd8e8, type: 2}
@@ -1573,7 +1581,7 @@ Transform:
   - {fileID: 1214849469}
   - {fileID: 1321276104}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 7
 --- !u!1 &489482833
 GameObject:
   m_ObjectHideFlags: 0
@@ -1606,7 +1614,7 @@ Transform:
   - {fileID: 1620416918}
   - {fileID: 392836055}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
 --- !u!1 &500825467
 GameObject:
   m_ObjectHideFlags: 0
@@ -2703,7 +2711,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400066, guid: 30c5e742ea1e8b84bba8a24a0c47a2dd, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400002, guid: 30c5e742ea1e8b84bba8a24a0c47a2dd, type: 2}
+      propertyPath: Stamina
+      value: 1000
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400004, guid: 30c5e742ea1e8b84bba8a24a0c47a2dd, type: 2}
@@ -3415,7 +3427,7 @@ Transform:
   - {fileID: 118310424}
   - {fileID: 138678479}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
 --- !u!114 &917845095
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3431,9 +3443,8 @@ MonoBehaviour:
   HitPoint: 5
   WalkSpeed: 1
   RunSpeed: 3
-  RotateSpeed: 200
-  TurnTime: 15
-  AttackDistance: 1
+  AttackDistance: 1.5
+  DamageWait: .800000012
   targets:
   - {fileID: 542707675}
   - {fileID: 894081182}
@@ -4679,7 +4690,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400004, guid: 6b9c0cfe2d366bf418aa0d430b0e4a48, type: 2}
       propertyPath: m_RootOrder
-      value: 8
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: 6b9c0cfe2d366bf418aa0d430b0e4a48, type: 2}
       propertyPath: m_Name
@@ -5498,7 +5509,7 @@ RectTransform:
   - {fileID: 1047286388}
   - {fileID: 1412588215}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -6047,7 +6058,7 @@ Transform:
   - {fileID: 394780229}
   - {fileID: 78733727}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 2
 --- !u!1 &1620416914
 GameObject:
   m_ObjectHideFlags: 0
@@ -6178,7 +6189,7 @@ Transform:
   - {fileID: 1324986986}
   - {fileID: 2022897434}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 5
 --- !u!1 &1656575925
 GameObject:
   m_ObjectHideFlags: 0
@@ -7237,7 +7248,7 @@ Transform:
   - {fileID: 1240785033}
   - {fileID: 1130058444}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 4
 --- !u!114 &1996063068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7251,7 +7262,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoint: 10
-  Stamina: 100
+  Stamina: 1000
   WalkSpeed: 2
   RunSpeed: 4
   HitDistance: 20
