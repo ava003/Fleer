@@ -4,24 +4,23 @@ using System.Collections;
 public class Enemy : MonoBehaviour {
 
 	public int HitPoint = 5;			//ライフ
-	public float WalkSpeed = 1.0f;		//移動スピード
-	public float RunSpeed = 2.0f;
-	public float AttackDistance = 10.0f;	//攻撃してくる距離
-	public float DamageWait = 1.0f;
+	public float WalkSpeed = 1f;		//移動スピード
+	public float RunSpeed = 2f;
+	public float AttackDistance = 10f;//攻撃してくる距離
+	public float DamageWait = 1f;		//ダメージ待ち
 
-	public Transform[] targets;	//巡回ルート
+	public Transform[] targets;			//巡回ルート
 
-	public bool alert = false;		//発見されたかどうか
+	public bool alert = false;			//発見されたかどうか
 	private bool applyDamage = false;	//ダメージを受けているか
-	private bool die = false;		//死亡しているか
 
 	private Transform PlayChara;		//Player
 	private Animator anim;				//Enemyアニメーター
-	private NavMeshAgent CharaNav;		//Enemyナビコンポーネント
+	private NavMeshAgent CharaNav;		//Enemyナビエージェント
 	private GameObject enemyPrefab;		//RagDollのPrefab
 
-	private string function = "";			//状態メソッド
-	private int currentRoot = 0;			//現在のターゲット
+	private string function = "";		//状態メソッド
+	private int currentRoot = 0;		//現在のターゲット
 
 	IEnumerator Start () {
 		PlayChara = GameObject.Find("PlayerFolder").transform;	//Playerの参照
@@ -51,7 +50,6 @@ public class Enemy : MonoBehaviour {
 		HitPoint --;		//ライフの減少
 
 		if(HitPoint <= 0){
-			die = true;
 			yield return StartCoroutine (EnemyDie());	//ライフが0になったら死亡
 		}
 
@@ -71,6 +69,8 @@ public class Enemy : MonoBehaviour {
 
 	/* 死亡処理 */
 	IEnumerator EnemyDie(){
+		Global.g_Kill ++;
+		CharaNav.Stop();
 		anim.SetBool("Damage", true);	//被ダメのモーション再生
 		yield return new WaitForSeconds(0.5f);
 		Destroy(gameObject);			//gameobjectを削除
@@ -85,8 +85,8 @@ public class Enemy : MonoBehaviour {
 		anim.SetBool("Walk", true);		//歩くモーション再生
 		if(Vector3.Distance(this.transform.position, pos) < AttackDistance){
 			anim.SetBool("Walk", false);	//歩くモーション停止
-			float waittime = Random.Range(1.0f, 5.0f);	//待ち時間をランダムで決定
-			float timer = 0.0f;
+			float waittime = Random.Range(1f, 5f);		//待ち時間をランダムで決定
+			float timer = 0f;
 			//待ち時間を超えるかAlert状態になったら抜ける
 			while(timer <= waittime && !alert){
 				timer += Time.deltaTime;
@@ -102,7 +102,7 @@ public class Enemy : MonoBehaviour {
 	#region アラート状態
 	void EnemyAlert(){
 		Vector3 pos = PlayChara.position;	//Playerのポジション
-		if(!applyDamage && !die){
+		if(!applyDamage){
 			if(Vector3.Distance(this.transform.position, pos) < AttackDistance){
 				CharaNav.Stop();
 				anim.SetTrigger("Attack");

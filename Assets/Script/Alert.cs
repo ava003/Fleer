@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Alert : MonoBehaviour {
 
-	//public float AlertDistance = 10.0f;
-
 	private Transform Root;	//一番上の親
 	private Enemy script;	//親のスクリプト
 
@@ -21,7 +19,7 @@ public class Alert : MonoBehaviour {
 		spCollider = gameObject.GetComponent<SphereCollider>();
 
 		layerMask = 1 << 10;	//レイヤーマスクの指定
-		Distance = 2 * (spCollider.radius * 1.73205080757f);
+		Distance = (spCollider.radius * Mathf.Sqrt(3));
 	}
 
 
@@ -29,8 +27,10 @@ public class Alert : MonoBehaviour {
 		//トリガー内にPlayerが入ってきた時,直線状に障害物がなければAlert状態に
 		if(other.tag == "Player"){
 			if(!Physics.Raycast(this.transform.position, CharaSpine.position, Distance, layerMask)){
-				script.alert = true;
-				gameObject.GetComponent<SphereCollider>().enabled = false;	//コライダーの無効化
+				if(Vector3.Distance(this.transform.position, CharaSpine.position) < Distance){
+					script.alert = true;
+					gameObject.GetComponent<SphereCollider>().enabled = false;	//コライダーの無効化
+				}
 			}
 		}
 	}

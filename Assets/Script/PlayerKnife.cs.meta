@@ -1,5 +1,8 @@
 fileFormatVersion: 2
 guid: a0820597da704ca42a68ae1777064104
+labels:
+- Script
+- Player
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []

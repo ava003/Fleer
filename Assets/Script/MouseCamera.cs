@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class MouseCamera : MonoBehaviour {
-	public float speed = 2.0f;		//カメラスピード
+	public float speed = 2f;		//カメラスピード
 	
-	public float maximumY = 60F;	//Y方向の最大角度
-	public float minimumY = -60F;	//Y方向の最小角度
+	public float maximumY = 60f;	//Y方向の最大角度
+	public float minimumY = -60f;	//Y方向の最小角度
 	
 	private Camera Maincamera;
 	private GameObject PlayChara;

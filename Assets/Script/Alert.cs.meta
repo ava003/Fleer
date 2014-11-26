@@ -1,5 +1,8 @@
 fileFormatVersion: 2
 guid: bd3f0c0ab3c8a4a46977b5a1aad18d01
+labels:
+- Script
+- Enemy
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []
