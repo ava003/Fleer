@@ -35,8 +35,10 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
-		PlayerMove();
-		RayAttack();
+		if(!StageMenu.StagePause){
+			PlayerMove();
+			RayAttack();
+		}
 	}
 	
 	#region プレイヤーの移動
@@ -128,7 +130,7 @@ public class Player : MonoBehaviour {
 
 	#region 銃のヒット判定
 	private void RayAttack(){
-		if(Input.GetMouseButtonDown(1)){
+		if(Input.GetMouseButtonDown(0)){
 			Global.g_airShot ++;
 			Ray ray = Maincamera.ScreenPointToRay(Input.mousePosition);
 

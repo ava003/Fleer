@@ -11,6 +11,6 @@ public class Timer : MonoBehaviour {
 		if (StageMenu.StagePause) return;
 
 		Global.g_Time += Time.deltaTime;
-		Debug.Log (Global.g_Time);
+		//Debug.Log (Global.g_Time);
 	}
 }

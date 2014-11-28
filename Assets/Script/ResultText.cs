@@ -61,7 +61,9 @@ public class ResultText : MonoBehaviour {
 		}else if(Global.g_Time > stageScore[stage].timeScore){
 			score += 10;
 		}
-		time.text = Global.g_Time.ToString ("##\\:##\\:##");
+		time.text = Mathf.Floor(Global.g_Time / 3600f).ToString ("00");
+		time.text += Mathf.Floor(Global.g_Time / 60f).ToString ("\\:00");
+		time.text += Mathf.Floor(Global.g_Time % 60f).ToString ("\\:00");
 		Invoke ("KillText", enableTime);
 	}
 	/* キル数 */

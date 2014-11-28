@@ -39,10 +39,10 @@
 	<Reference Include="System.Core" />
 	<Reference Include="System.Xml.Linq" />
 	<Reference Include="UnityEngine">
-	  <HintPath>G:/My Documents/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEngine.dll</HintPath>
 	</Reference>
 	<Reference Include="UnityEditor">
-	  <HintPath>G:/My Documents/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
+	  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/Managed/UnityEditor.dll</HintPath>
 	</Reference>
   </ItemGroup>
   <ItemGroup>
@@ -63,10 +63,16 @@
      <Compile Include="Assets\Script\CursorChange.cs" />
      <Compile Include="Assets\Script\Enemy.cs" />
      <Compile Include="Assets\Script\EnemyAttack.cs" />
+     <Compile Include="Assets\Script\Global.cs" />
+     <Compile Include="Assets\Script\Goal.cs" />
      <Compile Include="Assets\Script\MouseCamera.cs" />
      <Compile Include="Assets\Script\Player.cs" />
      <Compile Include="Assets\Script\PlayerKnife.cs" />
+     <Compile Include="Assets\Script\PointerChange.cs" />
+     <Compile Include="Assets\Script\ResultText.cs" />
+     <Compile Include="Assets\Script\StageMenu.cs" />
      <Compile Include="Assets\Script\StageUI.cs" />
+     <Compile Include="Assets\Script\Timer.cs" />
      <Compile Include="Assets\Script\WiiRemote.cs" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\_DepthOfField\SeparableWeightedBlur.shader" />
      <None Include="Assets\Resources\UnityAssets\UnityChan\Models\UnityChanShader\Shader\Unitychan_chara_eye.shader" />
@@ -143,7 +149,7 @@
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\DepthDownsample.shader" />
      <None Include="Assets\Standard Assets\Image Effects (Pro Only)\Image Based\Sources\Shaders\RadialBlurDepthWeighted.shader" />
  <Reference Include="UnityEngine.UI">
- <HintPath>G:/My Documents/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
+ <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.0/UnityEngine.UI.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>
