@@ -13,11 +13,10 @@ public class Enemy : MonoBehaviour {
 
 	public bool alert = false;		//発見されたかどうか
 	private bool applyDamage = false;	//ダメージを受けているか
-	private bool die = false;		//死亡しているか
 
 	private Transform PlayChara;		//Player
 	private Animator anim;				//Enemyアニメーター
-	private NavMeshAgent CharaNav;		//Enemyナビコンポーネント
+	private NavMeshAgent CharaNav;		//Enemyナビエージェント
 	private GameObject enemyPrefab;		//RagDollのPrefab
 
 	private string function = "";			//状態メソッド
@@ -51,7 +50,6 @@ public class Enemy : MonoBehaviour {
 		HitPoint --;		//ライフの減少
 
 		if(HitPoint <= 0){
-			die = true;
 			yield return StartCoroutine (EnemyDie());	//ライフが0になったら死亡
 		}
 
@@ -71,6 +69,7 @@ public class Enemy : MonoBehaviour {
 
 	/* 死亡処理 */
 	IEnumerator EnemyDie(){
+		CharaNav.Stop();
 		anim.SetBool("Damage", true);	//被ダメのモーション再生
 		yield return new WaitForSeconds(0.5f);
 		Destroy(gameObject);			//gameobjectを削除
@@ -102,7 +101,7 @@ public class Enemy : MonoBehaviour {
 	#region アラート状態
 	void EnemyAlert(){
 		Vector3 pos = PlayChara.position;	//Playerのポジション
-		if(!applyDamage && !die){
+		if(!applyDamage){
 			if(Vector3.Distance(this.transform.position, pos) < AttackDistance){
 				CharaNav.Stop();
 				anim.SetTrigger("Attack");
