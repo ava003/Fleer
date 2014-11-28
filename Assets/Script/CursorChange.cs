@@ -14,8 +14,8 @@ public class CursorChange : MonoBehaviour {
 	}
 
 	void Update () {
-		MousePosition = Input.mousePosition;					//マウス位置の取得
-		MousePosition.z = 10.0f;								//z方向の距離を固定
+		MousePosition = Input.mousePosition;	//マウス位置の取得
+		MousePosition.z = 10f;					//z方向の距離を固定
 		Pointer.transform.position = Maincamera.ScreenToWorldPoint(MousePosition);	//ワールド座標に変更しカーソルを移動
 	}
 }

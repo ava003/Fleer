@@ -1331,8 +1331,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 400176}
   - 95: {fileID: 9500000}
-  - 143: {fileID: 14300000}
   - 114: {fileID: 11400000}
+  - 195: {fileID: 19500000}
   m_Layer: 0
   m_Name: Enemy01
   m_TagString: Untagged
@@ -2737,7 +2737,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10.1000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400060}
@@ -2982,11 +2982,9 @@ MonoBehaviour:
   HitPoint: 5
   WalkSpeed: 1
   RunSpeed: 3
-  RotateSpeed: 200
-  TurnTime: 15
-  AttackDistance: 1
+  AttackDistance: 1.5
+  DamageWait: .800000012
   targets:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -3003,7 +3001,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd3f0c0ab3c8a4a46977b5a1aad18d01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AlertDistance: 10
 --- !u!114 &11400004
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3037,8 +3034,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
-  m_Center: {x: 0, y: -1, z: 2.70000005}
+  m_Radius: 5
+  m_Center: {x: 0, y: -1, z: 4.69999981}
 --- !u!136 &13600000
 CapsuleCollider:
   m_ObjectHideFlags: 1
@@ -3251,20 +3248,26 @@ SkinnedMeshRenderer:
     m_Center: {x: .000570416451, y: -.0641658902, z: .0243835747}
     m_Extent: {x: .959622264, y: .901977956, z: .173813432}
   m_DirtyAABB: 0
---- !u!143 &14300000
-CharacterController:
+--- !u!195 &19500000
+NavMeshAgent:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100176}
-  serializedVersion: 2
-  m_Height: 1.5
-  m_Radius: .200000003
-  m_SlopeLimit: 45
-  m_StepOffset: .300000012
-  m_SkinWidth: .0799999982
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: .860000014, z: 0}
+  m_Enabled: 1
+  m_Radius: .5
+  m_Speed: 1
+  m_Acceleration: 5
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 1
+  m_AutoTraverseOffMeshLink: 0
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

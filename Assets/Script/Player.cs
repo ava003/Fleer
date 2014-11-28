@@ -35,8 +35,10 @@ public class Player : MonoBehaviour {
 	}
 
 	void Update () {
-		PlayerMove();
-		RayAttack();
+		if(!StageMenu.StagePause){
+			PlayerMove();
+			RayAttack();
+		}
 	}
 	
 	#region プレイヤーの移動
@@ -128,14 +130,16 @@ public class Player : MonoBehaviour {
 
 	#region 銃のヒット判定
 	private void RayAttack(){
-		if(Input.GetMouseButtonDown(1)){
-			
+		if(Input.GetMouseButtonDown(0)){
+			Global.g_airShot ++;
 			Ray ray = Maincamera.ScreenPointToRay(Input.mousePosition);
 
 			if(Physics.Raycast(ray, out hit, HitDistance, layerMask)){
 				if(hit.collider.tag == "Enemy"){
+					Global.g_Shot ++;
 					string funstion = "";
 					if(hit.collider.name == "head"){
+						Global.g_HS ++;
 						funstion = "EnemyDie";
 					}else{
 						funstion = "ApplyDamage";

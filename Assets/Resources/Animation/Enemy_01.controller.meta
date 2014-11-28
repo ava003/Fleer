@@ -1,4 +1,7 @@
 fileFormatVersion: 2
 guid: 8e551355fd555b8449ece243c76c94c6
+labels:
+- Enemy
+- Mixamo
 NativeFormatImporter:
   userData: 

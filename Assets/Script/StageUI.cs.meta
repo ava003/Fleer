@@ -1,5 +1,9 @@
 fileFormatVersion: 2
 guid: af5786d511de3e540a88bab4ea3d5cf8
+labels:
+- Script
+- System
+- Stage
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []

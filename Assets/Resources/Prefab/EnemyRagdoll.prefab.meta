@@ -1,4 +1,7 @@
 fileFormatVersion: 2
 guid: f3ef997acec43db47ab40e28b7897ea0
+labels:
+- Enemy
+- Character
 NativeFormatImporter:
   userData: 
