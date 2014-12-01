@@ -78,10 +78,7 @@ public class Enemy : MonoBehaviour {
 
 	/* 死亡処理 */
 	IEnumerator EnemyDie(){
-<<<<<<< HEAD
-=======
 		Global.g_Kill ++;
->>>>>>> origin/master
 		CharaNav.Stop();
 		anim.SetBool("Damage", true);	//被ダメのモーション再生
 		yield return new WaitForSeconds(0.5f);
