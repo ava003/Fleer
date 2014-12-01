@@ -17,7 +17,7 @@ public class ResultText : MonoBehaviour {
 
 	public Stagescore[] stageScore;	//ステージごとのスコア基準
 	
-	private Text time, kill, HS, accuracy, rank;	//各テキストコンポーネントの格納
+	private Text time, kill, HS, accuracy, rank;	//各テキストコンポーネント
 	private int score = 0, stage = 0;		//スコアの記録
 
 	void Start () {

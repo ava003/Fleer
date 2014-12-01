@@ -21,12 +21,13 @@ public class Enemy : MonoBehaviour {
 
 	private string function = "";		//状態メソッド
 	private int currentRoot = 0;		//現在のターゲット
+	private float animDefaultSpeed;		//デフォルトのアニメーション速度
 
 	IEnumerator Start () {
-		PlayChara = GameObject.Find("PlayerFolder").transform;	//Playerの参照
-		anim = gameObject.GetComponent<Animator>();				//Enemyのアニメーターを参照
-		CharaNav = GetComponent<NavMeshAgent> ();				//Enemyのナビエージェントを参照
-		enemyPrefab = (GameObject)Resources.Load("Prefab/EnemyRagdoll");	//RagDollの参照
+		PlayChara = GameObject.Find("PlayerFolder").transform;	//Playerの格納
+		anim = gameObject.GetComponent<Animator>();				//Enemyのアニメーターを格納
+		CharaNav = GetComponent<NavMeshAgent> ();				//Enemyのナビエージェントを格納
+		enemyPrefab = (GameObject)Resources.Load("Prefab/EnemyRagdoll");	//RagDollの格納
 
 		CharaNav.speed = WalkSpeed;
 		CharaNav.stoppingDistance = AttackDistance;
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour {
 	}
 
 	void Update () {
+		AnimPause ();
 		if(alert){
 			function = "EnemyAlert";	//Alert状態のメソッドを指定
 			CharaNav.speed = RunSpeed;
@@ -60,7 +62,14 @@ public class Enemy : MonoBehaviour {
 		if(!applyDamage){
 			applyDamage = true;
 			anim.SetBool("Damage", true);
-			yield return new WaitForSeconds(DamageWait);
+			float timer = 0f;
+			//待ち時間を超えたら抜ける
+			while (timer <= DamageWait) {
+				if(!StageMenu.StagePause){
+					timer += Time.deltaTime;
+				}
+				yield return null;
+			}
 			applyDamage = false;
 			anim.SetBool("Damage", false);
 		}
@@ -86,18 +95,18 @@ public class Enemy : MonoBehaviour {
 	IEnumerator EnemyIdle(){
 		Vector3 pos = targets[currentRoot].position;	//ターゲットのポジション
 		anim.SetBool("Walk", true);		//歩くモーション再生
-		if(Vector3.Distance(this.transform.position, pos) < AttackDistance){
-			anim.SetBool("Walk", false);	//歩くモーション停止
-			float waittime = Random.Range(1f, 5f);		//待ち時間をランダムで決定
+		if (Vector3.Distance (this.transform.position, pos) < AttackDistance) {
+			anim.SetBool ("Walk", false);	//歩くモーション停止
+			float waittime = Random.Range (1f, 5f);		//待ち時間をランダムで決定
 			float timer = 0f;
 			//待ち時間を超えるかAlert状態になったら抜ける
-			while(timer <= waittime && !alert){
+			while (timer <= waittime && !alert) {
 				timer += Time.deltaTime;
 				yield return null;
 			}
 			currentRoot = (currentRoot < targets.Length - 1) ? currentRoot + 1 : 0;
 		}
-		CharaNav.SetDestination(pos);
+		if(!StageMenu.StagePause)	CharaNav.SetDestination(pos);
 	}
 	#endregion
 
@@ -105,7 +114,7 @@ public class Enemy : MonoBehaviour {
 	#region アラート状態
 	void EnemyAlert(){
 		Vector3 pos = PlayChara.position;	//Playerのポジション
-		if(!applyDamage){
+		if(!applyDamage && !StageMenu.StagePause){
 			if(Vector3.Distance(this.transform.position, pos) < AttackDistance){
 				CharaNav.Stop();
 				anim.SetTrigger("Attack");
@@ -127,4 +136,15 @@ public class Enemy : MonoBehaviour {
 	}
 	#endregion
 
+	void AnimPause(){
+		if (StageMenu.StagePause) {
+			CharaNav.Stop();
+			if(anim.speed != 0f){
+				animDefaultSpeed = anim.speed;
+			}
+			anim.speed = 0f;
+		} else if(anim.speed == 0f && !StageMenu.StagePause){
+			anim.speed = animDefaultSpeed;
+		}
+	}
 }

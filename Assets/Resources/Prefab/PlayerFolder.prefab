@@ -399,8 +399,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 400052}
   - 95: {fileID: 9500000}
-  - 114: {fileID: 11400004}
-  - 143: {fileID: 14300002}
   m_Layer: 0
   m_Name: Player
   m_TagString: chara
@@ -1038,7 +1036,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -.103179932}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 400002}
@@ -1384,8 +1382,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .400000006, y: .5, z: .300000012}
-  m_Center: {x: 0, y: -.0599999987, z: 0}
+  m_Size: {x: .5, y: .5, z: .5}
+  m_Center: {x: 0, y: -.0600000024, z: 0}
 --- !u!81 &8100000
 AudioListener:
   m_ObjectHideFlags: 1
@@ -1438,26 +1436,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HitPoint: 10
-  Stamina: 100
+  Stamina: 1000
   WalkSpeed: 2
-  RunSpeed: 4
-  HitDistance: 20
-  NowStamina: 0
---- !u!114 &11400004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100052}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 642837bdfe635124abcb146b3c2f4345, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  HitPoint: 10
-  Stamina: 100
-  WalkSpeed: 2
-  RunSpeed: 4
+  RunSpeed: 5
   HitDistance: 20
   NowStamina: 0
 --- !u!124 &12400000
@@ -1535,20 +1516,6 @@ CharacterController:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100066}
-  serializedVersion: 2
-  m_Height: 1.5
-  m_Radius: .200000003
-  m_SlopeLimit: 45
-  m_StepOffset: .300000012
-  m_SkinWidth: .0799999982
-  m_MinMoveDistance: 0
-  m_Center: {x: 0, y: .850000024, z: 0}
---- !u!143 &14300002
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 100052}
   serializedVersion: 2
   m_Height: 1.5
   m_Radius: .200000003

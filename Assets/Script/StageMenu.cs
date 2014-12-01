@@ -10,6 +10,12 @@ enum MenuState{
 	Resume
 }
 
+/*ゲーム設定
+ ・明るさ
+ ・音量
+ ・
+ */
+
 public class StageMenu : MonoBehaviour {
 
 	public static bool StagePause = false;

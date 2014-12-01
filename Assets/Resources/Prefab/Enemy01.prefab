@@ -2982,7 +2982,7 @@ MonoBehaviour:
   HitPoint: 5
   WalkSpeed: 1
   RunSpeed: 3
-  AttackDistance: 1.5
+  AttackDistance: 1.39999998
   DamageWait: .800000012
   targets:
   - {fileID: 0}
@@ -3255,16 +3255,16 @@ NavMeshAgent:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100176}
   m_Enabled: 1
-  m_Radius: .5
+  m_Radius: .300000012
   m_Speed: 1
-  m_Acceleration: 5
+  m_Acceleration: 10
   avoidancePriority: 50
   m_AngularSpeed: 120
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 0
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 1.79999995
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

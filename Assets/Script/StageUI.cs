@@ -8,9 +8,9 @@ public class StageUI : MonoBehaviour {
 	private float HPpar;		//HP減少の大きさ
 
 	void Start () {
-		script = GameObject.Find("PlayerFolder").GetComponent<Player>();	//Playerのスクリプトを参照
-		HP = GameObject.Find("HP");		//HPオブジェクトを参照
-		ST = GameObject.Find("ST");		//STオブジェクトを参照
+		script = GameObject.Find("PlayerFolder").GetComponent<Player>();	//Playerのスクリプトを格納
+		HP = GameObject.Find("HP");		//HPオブジェクトを格納
+		ST = GameObject.Find("ST");		//STオブジェクトを格納
 
 		HPpar = HP.transform.localScale.x / script.HitPoint;	//Playerのライフ分で等分
 	}

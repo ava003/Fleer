@@ -11,33 +11,49 @@ public class Player : MonoBehaviour {
 
 	public float NowStamina = 0f;	//スタミナ
 
-	private Camera Maincamera;
-	private Transform cameraT;
-	private GameObject PlayChara;
-	private GameObject Canvas;
-	private int layerMask;
-	private RaycastHit hit;
+	private Camera Maincamera;		//カメラ
+	private GameObject PlayChara;	//PlayerFolder
+	private GameObject chara;		//Player
+	private GameObject Canvas;		//GameUI
+	
+	private Animator anim;			//Playerのアニメーター
+	private CharacterController CharaCon;	//PlayerFolderのキャラクターコントロール
 
-	private Animator anim;
-	private GameObject enemyPrefab;
-	private CharacterController CharaCon;
+	private Vector3 PlayerPosition;	//Playerの初期位置
+	private float animDefaultSpeed;		//デフォルトのアニメーション速度
+
+	private int layerMask;			//レイヤーマスク
+	private RaycastHit hit;			//レイキャストのヒットオブジェクト
 	
 	void Start () {
-		PlayChara = GameObject.Find("PlayerFolder");
-		Canvas = GameObject.Find("Canvas");
-		anim = GameObject.FindWithTag("chara").GetComponent<Animator>();
-		CharaCon = PlayChara.GetComponent<CharacterController> ();
-		NowStamina = Stamina;
+		PlayChara = GameObject.Find("PlayerFolder");	//PlayerFolderの格納
+		Canvas = GameObject.Find("GameUI");				//GameUIの格納
+		chara = GameObject.FindWithTag ("chara");		//Playerの格納
 
-		Maincamera = GameObject.Find("Main Camera").GetComponent<Camera>();
-		cameraT = Maincamera.transform;
-		layerMask = ((1 << 9) + (1 << 10));
+		anim = chara.GetComponent<Animator>();			//Playerのアニメーターを格納
+		CharaCon = PlayChara.GetComponent<CharacterController> ();	//PlayerFolderのキャラクターコントロールを格納
+
+		NowStamina = Stamina;							//スタミナの初期化
+		PlayerPosition = chara.transform.localPosition;	//Playerの初期位置を格納
+
+		Maincamera = GameObject.Find("Main Camera").GetComponent<Camera>();	//メインカメラの格納
+		layerMask = ((1 << 9) + (1 << 10));				//レイヤーマスクを設定
 	}
 
 	void Update () {
-		if(!StageMenu.StagePause){
-			PlayerMove();
-			RayAttack();
+		//ポーズしていない場合にループ
+		if (!StageMenu.StagePause) {
+			PlayerMove ();
+			RayAttack ();
+		}
+		AnimPause();
+
+		//モーションによる移動をリセット
+		float offset = Vector3.Distance(PlayerPosition, chara.transform.localPosition);
+		if(offset > 0.05f){
+			float posX = Mathf.SmoothStep(chara.transform.localPosition.x, PlayerPosition.x, 0.1f);
+			float posZ = Mathf.SmoothStep(chara.transform.localPosition.z, PlayerPosition.z, 0.1f);
+			chara.transform.localPosition = new Vector3(posX, 0f, posZ);
 		}
 	}
 	
@@ -57,7 +73,7 @@ public class Player : MonoBehaviour {
 		Vector3 MoveDirection = Vector3.zero;	//移動量
 
 		//カメラから見た方向の取得
-		Vector3 forward = cameraT.TransformDirection(Vector3.forward);
+		Vector3 forward = Maincamera.transform.TransformDirection(Vector3.forward);
 		forward.y = 0;
 		forward = forward.normalized;
 		Vector3 right = new Vector3(forward.z, 0, -forward.x);
@@ -72,25 +88,21 @@ public class Player : MonoBehaviour {
 		if (Input.GetKey (KeyCode.UpArrow)) {
 			Walk = true;
 			move += 1;
-			//PlayChara.rigidbody.velocity += PlayChara.transform.forward * speed;
 			MoveDirection += forward * speed;
 		}
 		if (Input.GetKey (KeyCode.DownArrow)) {
 			Walk = true;
 			move -= 1;
-			//PlayChara.rigidbody.velocity -= PlayChara.transform.forward * speed;
 			MoveDirection -= forward * speed;
 		}
 		if (Input.GetKey (KeyCode.RightArrow)) {
 			Walk = true;
 			move += 4;
-			//PlayChara.rigidbody.velocity += PlayChara.transform.right * speed;
 			MoveDirection += right * speed;
 		}
 		if (Input.GetKey (KeyCode.LeftArrow)) {
 			Walk = true;
 			move -= 4;
-			//PlayChara.rigidbody.velocity -= PlayChara.transform.right * speed;
 			MoveDirection -= right * speed;
 		}
 
@@ -152,4 +164,15 @@ public class Player : MonoBehaviour {
 		}
 	}
 	#endregion
+
+	void AnimPause(){
+		if (StageMenu.StagePause) {
+			if(anim.speed != 0f){
+				animDefaultSpeed = anim.speed;
+			}
+			anim.speed = 0f;
+		} else if(anim.speed == 0f && !StageMenu.StagePause){
+			anim.speed = animDefaultSpeed;
+		}
+	}
 }
